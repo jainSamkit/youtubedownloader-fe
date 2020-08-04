@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 typedef void String2Void(string);
-typedef void Void2Void();
+typedef void Context2Void(BuildContext context);
 
 class URLTextField extends StatefulWidget {
 
   String2Void urlChangeCallback;
-  Void2Void onVideoLinksFetch;
+  Context2Void onVideoLinksFetch;
   var videoURL;
   URLTextField({this.videoURL,this.urlChangeCallback,this.onVideoLinksFetch});
 
@@ -31,8 +31,8 @@ class _URLTextFieldState extends State<URLTextField> {
     widget.urlChangeCallback(myController.text);
   }
 
-  void onFormSubmit() {
-    widget.onVideoLinksFetch();
+  void onFormSubmit(BuildContext context) {
+    widget.onVideoLinksFetch(context);
   }
 
   @override
@@ -80,21 +80,22 @@ class _URLTextFieldState extends State<URLTextField> {
             ),
 
             SizedBox(height: 10),
-
-            RaisedButton(
-              onPressed: () {
-                this.onFormSubmit();
-              },
-              child: Text(
-                "Fetch",
-              ),
-              color: Colors.cyan,
-              splashColor: Colors.amber,
-              animationDuration: Duration(seconds: 5),
-              textColor: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+            Builder(
+              builder: (context)=> RaisedButton(
+                onPressed: () {
+                  this.onFormSubmit(context);
+                },
+                child: Text(
+                  "Fetch",
+                ),
+                color: Colors.cyan,
+                splashColor: Colors.amber,
+                animationDuration: Duration(seconds: 5),
+                textColor: Colors.white,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             )
           ],
