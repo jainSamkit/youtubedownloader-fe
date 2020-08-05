@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'dart:io';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -30,9 +31,10 @@ class Browser {
     final status = await Permission.storage.request();
     if(status.isGranted) {
       final externalDir = await getExternalStorageDirectory();
+      print(externalDir.path);
       final id = await FlutterDownloader.enqueue(
         url: contentURL,
-        savedDir: externalDir.path,
+        savedDir: "/storage/emulated/0/Download/",
         fileName: contentTitle,
         showNotification: true,
         openFileFromNotification: true

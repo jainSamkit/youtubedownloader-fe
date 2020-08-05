@@ -47,24 +47,28 @@ class _VideoAudioLinksState extends State<VideoAudioLinks> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: this.widget.videoResponse.contentTiles.map((content) {
         String contentText="";
+        String contentTitle="";
         if(videoButton==Colors.black) {
-          if(content.contentFormat.contains("video")) {
-//            contentText = content.contentFormat.replaceAll("video", "");
-//            contentText = contentText.replaceAll("mp4", "");
+          if(content.contentFormat.contains("video")
+              && content.contentFormat.contains("mp4")
+              && !content.contentFormat.contains("webm")) {
           contentText = content.contentFormat;
+          contentTitle = content.contentTitle + ".mp4";
           }
         }
         else if(audioButton==Colors.black) {
-          if(content.contentFormat.contains("audio") && !content.contentFormat.contains("video")) {
+          if(content.contentFormat.contains("audio")
+              && !content.contentFormat.contains("video")
+              && !content.contentFormat.contains("webm")) {
             contentText = content.contentFormat;
+            contentTitle = content.contentTitle + ".mp3";
           }
         }
 
         if(contentText.length>0) {
           return RaisedButton(
             onPressed: () {
-               var res = browser.fetchContentFromYoutube(content.contentURL,content.contentTitle);
-
+               var res = browser.fetchContentFromYoutube(content.contentURL,contentTitle);
             },
             child: Text(
               content.contentFormat,
