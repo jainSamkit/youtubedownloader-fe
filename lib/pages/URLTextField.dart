@@ -17,6 +17,7 @@ class URLTextField extends StatefulWidget {
 class _URLTextFieldState extends State<URLTextField> {
 
   var myController;
+  FocusNode _focusNode = new FocusNode();
 
   @override
   void initState() {
@@ -51,22 +52,40 @@ class _URLTextFieldState extends State<URLTextField> {
         child: Column(
           children: <Widget>[
             TextField(
+              focusNode: _focusNode,
               controller: myController,
               autofocus: true,
               cursorColor:Colors.amber,
-              cursorWidth: 3,
-              maxLines: 2,
+              cursorWidth: 1,
+              maxLines: 1,
+
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold
+              ),
               decoration: InputDecoration(
+
+                suffixIcon: MaterialButton(
+                  onPressed: () => myController.clear(),
+                  child: Icon(
+                    Icons.delete,
+                    color: Color(0xff005662)
+//                    color: Colors.blue,
+                  ),
+                  minWidth: 10,
+                  splashColor: Colors.transparent
+                ),
                 hintText: "Youtube video url?",
                 hintStyle: TextStyle(
                   fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide: BorderSide(
-                    width: 2,
-                    color: Colors.cyan,
+                    width: 3,
+                    color: Color(0xff005662),
                     style: BorderStyle.solid
                   )
                 ),
@@ -83,12 +102,17 @@ class _URLTextFieldState extends State<URLTextField> {
             Builder(
               builder: (context)=> RaisedButton(
                 onPressed: () {
+
+                  _focusNode.unfocus();
                   this.onFormSubmit(context);
                 },
                 child: Text(
-                  "Fetch",
+                  "Hit",
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
                 ),
-                color: Colors.cyan,
+                color: Color(0xff005662),
                 splashColor: Colors.amber,
                 animationDuration: Duration(seconds: 5),
                 textColor: Colors.white,
